@@ -1,0 +1,15 @@
+class Solution:
+    def tupleSameProduct(self, nums: List[int]) -> int:
+        res=0
+        map = {}
+        for i in range(len(nums)-1):
+            a = nums[i]
+            for j in range(i+1, len(nums)):
+                b = nums[j]
+                prev = map.get(a*b,0)+1
+                map.update({a*b:prev})
+                #print(f"{map} {prev}")
+                while prev>1:
+                    res = res+8
+                    prev-=1
+        return res
