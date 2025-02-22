@@ -1,0 +1,23 @@
+class Solution(object):
+    def recoverFromPreorder(self, traversal):
+        index = 0
+        stack = []
+        while index < len(traversal):
+            depth = 0
+            while index < len(traversal) and traversal[index] == '-':
+                depth += 1
+                index += 1
+            value_start = index
+            while index < len(traversal) and traversal[index].isdigit():
+                index += 1
+            value = int(traversal[value_start:index])
+            node = TreeNode(value)
+            while len(stack) > depth:
+                stack.pop()
+            if stack:
+                if not stack[-1].left:
+                    stack[-1].left = node
+                else:
+                    stack[-1].right = node
+            stack.append(node)
+        return stack[0] if stack else None
