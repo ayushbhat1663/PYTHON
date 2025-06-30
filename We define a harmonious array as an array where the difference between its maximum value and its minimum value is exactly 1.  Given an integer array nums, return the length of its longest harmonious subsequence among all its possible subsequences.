@@ -1,0 +1,8 @@
+class Solution:
+    def findLHS(self, nums: List[int]) -> int:
+        c = Counter(nums)
+        return max(
+            0 if c[num + 1] == 0 else freq + c[num + 1]
+            for num, freq
+            in c.items()
+        )
