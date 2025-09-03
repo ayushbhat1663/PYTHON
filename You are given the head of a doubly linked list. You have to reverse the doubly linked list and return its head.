@@ -1,0 +1,26 @@
+class Solution:
+    def reverseDLL(self, head):
+        # Check if the list is empty or has only one element
+        if not head or not head.next:
+            return head
+
+        # Initialize pointers for the reversal process
+        previous_node = head.prev
+        current_node = head
+        next_node = head.next
+
+        # Traverse the list and reverse the pointers
+        while next_node:
+            current_node.prev = next_node
+            current_node.next = previous_node
+            
+            previous_node = current_node
+            current_node = next_node
+            next_node = next_node.next
+
+        # Update the pointers for the last node
+        current_node.prev = next_node
+        current_node.next = previous_node
+
+        # Return the new head of the reversed doubly linked list
+        return current_node
