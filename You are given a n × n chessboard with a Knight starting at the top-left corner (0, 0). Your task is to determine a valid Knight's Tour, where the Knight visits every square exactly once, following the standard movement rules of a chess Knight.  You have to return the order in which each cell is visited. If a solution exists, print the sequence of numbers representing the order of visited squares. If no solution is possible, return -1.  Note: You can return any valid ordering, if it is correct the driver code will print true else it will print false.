@@ -1,0 +1,20 @@
+class Solution:
+    def knightTour(self, n):
+        # code here
+        dirs = [(-2, 1), (-1, 2), (1, 2), (2, 1), (2, -1), (1, -2), (-1, -2), (-2, -1)]
+        board = [[-1]*n for _ in range(n)]
+        
+        
+        def dfs(board, r, c, v, steps):
+            if steps >= n*n:
+                return board
+            if r < 0 or r >= n or c < 0 or c >= n or board[r][c] != -1:
+                return None
+                
+            board[r][c] = v
+            for dr, dc in dirs:
+                if dfs(board, r+dr, c+dc , v+1, steps+1) is not None:
+                    return board
+            board[r][c] = -1
+            return None
+        return b if (b := dfs(board, 0, 0, 0, 0)) else [[-1]]
