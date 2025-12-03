@@ -1,0 +1,15 @@
+class Solution:
+    def tsp(self, cost):
+        n = len(cost)
+        m = 1 << n
+        dp = [[10**15] * n for _ in range(m)]
+        dp[1][0] = 0
+        for mask in range(m):
+            for u in range(n):
+                if mask & (1 << u):
+                    for v in range(n):
+                        if not (mask & (1 << v)):
+                            nxt = mask | (1 << v)
+                            dp[nxt][v] = min(dp[nxt][v], dp[mask][u] + cost[u][v])
+        ans = min(dp[m-1][i] + cost[i][0] for i in range(n))
+        return ans
