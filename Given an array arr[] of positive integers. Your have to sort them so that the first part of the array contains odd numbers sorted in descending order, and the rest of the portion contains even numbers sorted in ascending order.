@@ -1,0 +1,21 @@
+import heapq
+class Solution:
+    def sortIt(self, arr):
+        ac = []
+        ds = []
+        
+        for i in arr:
+            if i%2 == 0:
+                ac.append(i)
+            else:
+                ds.append(-i)
+        
+        heapq.heapify(ac)
+        heapq.heapify(ds)
+        
+        for i in range(len(arr)):
+            if ds:
+                arr[i] = -heapq.heappop(ds)
+            else:
+                arr[i] = heapq.heappop(ac)
+        
