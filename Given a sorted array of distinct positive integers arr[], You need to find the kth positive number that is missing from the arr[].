@@ -1,0 +1,6 @@
+class Solution:
+    def kthMissing(self, arr, k):
+        for ix,ve in enumerate(arr):
+            if k<=ve-(ix+1):
+                return k+ix
+        return k+ix+1
