@@ -1,0 +1,13 @@
+class Solution:
+    def maxOnes(self, arr, k):
+        arr = [i ^ 1 for i in arr]
+        i, j = 0, 0
+        maximum = 0
+        while j < len(arr):
+            k -= arr[j]
+            while k < 0:
+                k += arr[i]
+                i +=1
+            j +=1
+            maximum = max(maximum, j - i)
+        return maximum
