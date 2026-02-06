@@ -1,0 +1,22 @@
+class Solution:
+    def smallestDiff(self, a, b, c):
+        n = len(a)
+        a.sort()
+        b.sort()
+        c.sort()
+        min_triplet = None
+        min_diff = 10**5
+        triplet = [(a[0], 0, a), (b[0], 0, b), (c[0], 0, c)]
+        triplet.sort(reverse=True)
+        while True:
+            diff = triplet[0][0] - triplet[2][0]
+            if diff < min_diff:
+                min_diff = diff
+                min_triplet = [t[0] for t in triplet]
+            _, i, arr = triplet.pop()
+            if i == n - 1:
+                break
+            else:
+                triplet.append((arr[i + 1], i + 1, arr))
+                triplet.sort(reverse=True)
+        return min_triplet
