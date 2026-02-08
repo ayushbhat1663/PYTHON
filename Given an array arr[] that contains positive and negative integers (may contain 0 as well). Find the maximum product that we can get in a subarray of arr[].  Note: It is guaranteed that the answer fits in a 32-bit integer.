@@ -1,0 +1,11 @@
+class Solution:
+	def maxProduct(self,arr):
+		minv, maxv = 0, 0
+		ans = float('-inf')
+		for e in arr:
+		    if minv == maxv == 0:
+		        minv = maxv = e
+		    else:
+		        minv, maxv = min(minv*e, maxv*e, e), max(minv*e, maxv*e, e)
+		    ans = max(ans, maxv)
+	    return ans
