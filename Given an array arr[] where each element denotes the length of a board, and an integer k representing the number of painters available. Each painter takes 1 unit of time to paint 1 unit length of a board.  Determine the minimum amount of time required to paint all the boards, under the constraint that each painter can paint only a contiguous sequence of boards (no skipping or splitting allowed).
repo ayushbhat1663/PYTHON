@@ -1,0 +1,28 @@
+class Solution:
+    def minTime (self, arr, k):
+        lth=len(arr)
+        pfs=arr[:]
+        for ix in range(1,lth):
+            pfs[ix]+=pfs[ix-1]
+        def ok(mid):
+            nonlocal lth,pfs,k
+            kk=k
+            prv=ix=0
+            while ix<lth:
+                if pfs[ix]-prv<=mid:
+                    ix+=1
+                else:
+                    kk-=1
+                    if kk<=0:
+                        return False
+                    prv=pfs[ix-1]
+            return True
+        left=max(arr)
+        right=pfs[-1]+1
+        while left<right:
+            mid=left+(right-left)//2
+            if ok(mid):
+                right=mid
+            else:
+                left=mid+1
+        return left
