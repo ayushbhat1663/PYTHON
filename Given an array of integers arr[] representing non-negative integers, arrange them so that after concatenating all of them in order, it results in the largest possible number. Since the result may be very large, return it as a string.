@@ -1,0 +1,45 @@
+from functools import cmp_to_key
+
+class Solution:
+
+    def findLargest(self, arr):
+
+        # Convert all numbers to strings
+
+        arr = list(map(str, arr))
+
+        # Custom comparator
+
+        def compare(a, b):
+
+            if a + b > b + a:
+
+                return -1 # a before b
+
+            elif a + b < b + a:
+
+                return 1 # b before a
+
+            else:
+
+                return 0
+
+        # Sort using custom comparator
+
+        arr.sort(key=cmp_to_key(compare))
+
+        
+
+        # Concatenate the result
+
+        result = ''.join(arr)
+
+ 
+
+        # Handle case when all are zeros
+
+        if result[0] == '0':
+
+            return '0'        
+
+        return result
