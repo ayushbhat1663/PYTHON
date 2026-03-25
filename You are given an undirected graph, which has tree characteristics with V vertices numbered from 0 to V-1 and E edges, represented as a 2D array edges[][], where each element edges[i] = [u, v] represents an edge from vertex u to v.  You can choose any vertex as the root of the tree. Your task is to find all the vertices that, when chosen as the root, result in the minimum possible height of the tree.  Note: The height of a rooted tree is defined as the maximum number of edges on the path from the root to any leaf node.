@@ -1,0 +1,21 @@
+class Solution:
+    def minHeightRoot(self, V, edges):
+        from collections import defaultdict
+        adj=defaultdict(set)
+        ino=defaultdict(int)
+        for sta,sto in edges:
+            adj[sta].add(sto)
+            adj[sto].add(sta)
+            ino[sta]+=1
+            ino[sto]+=1
+        q=[ix for ix in range(V) if ino[ix]==1]
+        while q:
+            nq=[]
+            for cur in q:
+                for nxt in adj[cur]:
+                    ino[nxt]-=1
+                    if ino[nxt]==1:
+                        nq.append(nxt)
+            ret=q
+            q=nq
+        return ret
