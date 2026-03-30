@@ -1,0 +1,27 @@
+#User function Template for python3
+class Solution:
+    def minCost(self, houses):
+        n = len(houses)
+        edges = []
+        for i in range(n):
+            for j in range(i+1, n):
+                x0, y0 = houses[i]
+                x1, y1 = houses[j]
+                edges.append((abs(x0-x1)+abs(y0-y1), i, j))
+        
+        parent = list(range(n))
+        def find(i):
+            nonlocal parent
+            if parent[i] != i:
+                parent[i] = find(parent[i])
+            return parent[i]
+        
+        edges.sort()
+        total = 0
+        for v, i, j in edges:
+            r1 = find(i)
+            r2 = find(j)
+            if r1 != r2:
+                parent[r1] = r2
+                total += v
+        return total
