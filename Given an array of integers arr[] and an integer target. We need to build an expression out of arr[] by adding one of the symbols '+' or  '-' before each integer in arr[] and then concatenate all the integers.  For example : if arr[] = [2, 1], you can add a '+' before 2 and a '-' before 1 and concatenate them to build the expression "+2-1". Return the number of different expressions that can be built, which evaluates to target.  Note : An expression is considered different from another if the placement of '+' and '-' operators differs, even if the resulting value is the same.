@@ -1,0 +1,10 @@
+class Solution:
+    def totalWays(self, arr, target):
+        from functools import cache
+        @cache
+        def dfs(ix=len(arr)-1,sm=0):
+            nonlocal arr,target
+            if ix<0:
+                return sm==target
+            return dfs(ix-1,sm+arr[ix])+dfs(ix-1,sm-arr[ix])
+        return dfs()
