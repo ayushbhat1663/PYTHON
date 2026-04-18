@@ -1,0 +1,11 @@
+class Solution:
+    def maxOnes(self, arr):
+        total_ones = sum(arr)
+        
+        curr_gain = max_gain = 0
+        for ele in arr:
+            val = 1 if ele == 0 else -1
+            
+            curr_gain = max(curr_gain+val, val)
+            max_gain = max(max_gain, curr_gain)
+        return total_ones+max_gain
