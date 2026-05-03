@@ -1,0 +1,12 @@
+class Solution:
+    
+    def countSetBits(self, x):
+        count = 0
+        while x:
+            x = x & (x - 1)
+            count += 1
+        return count
+
+    def sortBySetBitCount(self, arr):
+        arr.sort(key=lambda x: self.countSetBits(x), reverse=True)
+        return arr
