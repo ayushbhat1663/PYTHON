@@ -1,0 +1,60 @@
+class Solution:
+    # Helper function to check if a string has valid parentheses
+    def isValid(self, s):
+        count = 0
+        for c in s:
+            if c == '(':
+                count += 1
+            elif c == ')':
+                count -= 1
+
+            if count < 0:
+                return False
+
+        return count == 0
+
+    # Depth-First Search with backtracking
+    def dfs(self, s, start, l_rem, r_rem, res):
+        # If no removals left, check validity
+        if l_rem == 0 and r_rem == 0:
+            if self.isValid(s):
+                res.add(s)
+            return
+
+        for i in range(start, len(s)):
+            # Skip duplicate removals
+            if i != start and s[i] == s[i - 1]:
+                continue
+
+            # Remove '('
+            if s[i] == '(' and l_rem > 0:
+                self.dfs(s[:i] + s[i+1:], i, l_rem - 1, r_rem, res)
+
+            # Remove ')'
+            elif s[i] == ')' and r_rem > 0:
+                self.dfs(s[:i] + s[i+1:], i, l_rem, r_rem - 1, res)
+
+    def validParenthesis(self, s):
+        l_rem = 0
+        r_rem = 0
+
+        # Calculate minimum removals needed
+        for c in s:
+            if c == '(':
+                l_rem += 1
+            elif c == ')':
+                if l_rem > 0:
+                    l_rem -= 1
+                else:
+                    r_rem += 1
+
+        # Store unique valid strings
+        valid_strings = set()
+
+        self.dfs(s, 0, l_rem, r_rem, valid_strings)
+
+        # Edge case
+        if not valid_strings:
+            return [""]
+
+        return sorted(list(valid_strings))
