@@ -1,0 +1,27 @@
+from collections import deque
+
+class Solution:
+    def minSteps(self, arr, start, end):
+        
+        MOD = 1000
+        
+        queue = deque()
+        queue.append((start, 0))
+        
+        visited = [False] * MOD
+        visited[start] = True
+        
+        while queue:
+            num, steps = queue.popleft()
+            
+            if num == end:
+                return steps
+            
+            for x in arr:
+                new_num = (num * x) % MOD
+                
+                if not visited[new_num]:
+                    visited[new_num] = True
+                    queue.append((new_num, steps + 1))
+        
+        return -1
