@@ -1,0 +1,8 @@
+class Solution:
+    def checkElements(self, start, end, arr):
+        while start<=end:
+            if start not in arr:
+                return False
+                break
+            start+=1
+        return True
