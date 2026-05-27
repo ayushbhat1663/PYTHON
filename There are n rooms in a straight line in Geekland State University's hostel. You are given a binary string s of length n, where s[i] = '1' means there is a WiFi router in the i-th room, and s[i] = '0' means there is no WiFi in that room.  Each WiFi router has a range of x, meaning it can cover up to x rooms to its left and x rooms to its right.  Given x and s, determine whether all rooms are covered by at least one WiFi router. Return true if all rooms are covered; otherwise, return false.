@@ -1,0 +1,20 @@
+class Solution:
+    def wifiRange(self, s, x):
+        l=float('inf')
+        r = float('inf')
+        d = float('inf')
+        n = len(s)
+        for i in range(len(s)):
+            if s[i]=='0':
+                if l==float('inf') or i>r:
+                    d = min(d,i)
+            else:
+                l = 0 if (i-x)<=0 else i-x
+                r  = n if (i+x)>=n else i+x
+                
+                if l<=d and d<=r:
+                    d = float('inf')
+        if d==float('inf'):
+            return True
+        return False
+                
