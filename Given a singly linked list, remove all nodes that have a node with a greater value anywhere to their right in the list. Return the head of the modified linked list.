@@ -1,0 +1,35 @@
+'''
+Structure of linked list node
+class Node:
+    def __init__(self,x):
+        self.data=x
+        self.next=None
+
+'''
+class Solution:
+    def compute(self,head):
+        def reverse(head):
+            prev, curr = None, head
+            while curr:
+                nxt = curr.next
+                curr.next = prev
+                prev = curr
+                curr = nxt
+            return prev
+            
+        temp = reverse(head)
+        
+        dummy = Node(-1)
+        ptr = dummy
+        
+        curr_max = float('-inf')
+        while temp:
+            if temp.data >= curr_max:
+                ptr.next = temp
+                curr_max = temp.data
+                ptr = ptr.next
+            temp = temp.next
+        ptr.next = None
+        
+        res = reverse(dummy.next)
+        return res
