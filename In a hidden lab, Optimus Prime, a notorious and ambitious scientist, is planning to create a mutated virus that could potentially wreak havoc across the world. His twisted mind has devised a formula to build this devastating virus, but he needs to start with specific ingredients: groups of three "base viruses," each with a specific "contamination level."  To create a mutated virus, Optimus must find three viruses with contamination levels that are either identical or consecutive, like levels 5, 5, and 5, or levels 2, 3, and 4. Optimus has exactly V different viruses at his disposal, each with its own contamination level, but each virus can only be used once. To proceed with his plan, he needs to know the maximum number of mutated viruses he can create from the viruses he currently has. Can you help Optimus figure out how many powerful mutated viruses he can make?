@@ -1,0 +1,36 @@
+from collections import Counter
+
+def maxMutatedViruses(N, contamination_levels):
+    freq = Counter(contamination_levels)
+
+    dp = {(0, 0): 0}
+
+    # Process two extra levels to flush pending sequences
+    for value in range(1, 103):
+        cnt = freq.get(value, 0)
+        new_dp = {}
+
+        for (a, b), groups in dp.items():
+
+            if a + b > cnt:
+                continue
+
+            remaining = cnt - a - b
+
+            for k in range(remaining + 1):
+                triples = (remaining - k) // 3
+
+                state = (b, k)
+                score = groups + k + triples
+
+                if score > new_dp.get(state, -1):
+                    new_dp[state] = score
+
+        dp = new_dp
+
+    return dp.get((0, 0), 0)
+
+if __name__ == '__main__':
+    V = int(input())
+    contamination_levels = list(map(int, input().split()))
+    print(maxMutatedViruses(V, contamination_levels))
