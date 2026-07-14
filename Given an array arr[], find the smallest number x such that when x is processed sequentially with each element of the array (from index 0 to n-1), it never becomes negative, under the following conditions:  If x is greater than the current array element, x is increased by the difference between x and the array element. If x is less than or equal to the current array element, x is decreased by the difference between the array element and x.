@@ -1,0 +1,18 @@
+class Solution:
+    def find(self, arr):
+        def solve(start):
+            x = start
+            for ele in arr:
+                x = 2*x - ele
+                if x<0:
+                    return False
+            return True
+        low = 1
+        high = 10**6
+        while low<=high:
+            mid = low + (high-low)//2
+            if solve(mid):
+                high = mid-1
+            else:
+                low = mid+1
+        return low
