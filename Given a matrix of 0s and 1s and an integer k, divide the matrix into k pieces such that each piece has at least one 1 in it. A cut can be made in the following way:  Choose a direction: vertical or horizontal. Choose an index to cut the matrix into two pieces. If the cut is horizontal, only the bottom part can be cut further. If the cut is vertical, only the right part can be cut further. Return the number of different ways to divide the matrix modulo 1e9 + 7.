@@ -1,0 +1,43 @@
+class Solution:
+    def findWays(self, matrix, k):
+        MOD = 10**9 + 7
+        n = len(matrix)
+        m = len(matrix[0])
+
+        suffix = [[0] * (m + 1) for _ in range(n + 1)]
+
+        for i in range(n - 1, -1, -1):
+            for j in range(m - 1, -1, -1):
+                suffix[i][j] = (
+                    matrix[i][j]
+                    + suffix[i + 1][j]
+                    + suffix[i][j + 1]
+                    - suffix[i + 1][j + 1]
+                )
+
+        # dp[pieces][row][col]
+        dp = [[[0] * m for _ in range(n)] for _ in range(k + 1)]
+
+        for i in range(n):
+            for j in range(m):
+                if suffix[i][j] > 0:
+                    dp[1][i][j] = 1
+
+        for pieces in range(2, k + 1):
+            for row in range(n):
+                for col in range(m):
+                    ways = 0
+
+                    # Horizontal cuts
+                    for next_row in range(row + 1, n):
+                        if suffix[row][col] > suffix[next_row][col]:
+                            ways += dp[pieces - 1][next_row][col]
+
+                    # Vertical cuts
+                    for next_col in range(col + 1, m):
+                        if suffix[row][col] > suffix[row][next_col]:
+                            ways += dp[pieces - 1][row][next_col]
+
+                    dp[pieces][row][col] = ways % MOD
+
+        return dp[k][0][0]
